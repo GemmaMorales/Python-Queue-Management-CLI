@@ -6,7 +6,7 @@ def send(body='Some body', to=''):
     # Your Account Sid and Auth Token from twilio.com/console
     # DANGER! This is insecure. See http://twil.io/secure
     account_sid = os.getenv("ACCT_SID")
-    auth_token = os.getemv("TOKEN")
+    auth_token = os.getenv("TOKEN")
     client = Client(account_sid, auth_token)
 
     message = client.messages \
