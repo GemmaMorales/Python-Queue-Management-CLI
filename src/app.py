@@ -9,23 +9,28 @@ queue = Queue(mode="FIFO")
 def print_queue():
     # you must print on the console the entire queue list
     print("Printing the entire list...")
-    
     print(queue.get_queue())
 
-def add(name):
-    queue.enqueue(name)
-    return queue
-    
+def add(name, phone_number):
+    queue.enqueue({"name":name, "phone":phone_number})
+    send("Your name has been added to the queue.", phone_number)
+    return queue    
 
 def dequeue():
+    customer_number = queue.get_queue()
+    send("Your table is ready.", customer_number[0]["phone"])
     queue.dequeue()
     return queue
     
-
 def save():
+    with open('data.json', 'w') as json_file:
+        json.dump(queue.get_queue(), json_file)
+        json_file.close()
     pass
 
 def load():
+    with open('data.json', 'r') as json_file:
+        print(json_file)
     pass 
         
     
@@ -52,11 +57,13 @@ What would you like to do (type a number and press Enter)?
         stop = True
     elif option == 1:
         name = input("Enter the name you want to add to the list:")
-        add(name)
+        phone_number = input("Enter the phone number where you can be contacted")
+        add(name, phone_number)
     elif option == 2:
         dequeue()
     elif option == 4:
-        
+        save()
     elif option == 5:
+        load()
     else:
         print("Invalid option "+str(option))
